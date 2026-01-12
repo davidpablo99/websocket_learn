@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveDesk</title>
+    <style>
+    body { font-family: Arial; }
+    #chat { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+  </style>
+</head>
+<body>
+
+    <h2>LiveDesk - Chat</h2>
+
+    <div id="chat"></div>
+
+    <input type="text" name="" id="msg" placeholder="Digite...">
+    <button onclick="send()">Enviar</button>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:3000")
+
+        const chat = document.getElementById("chat")
+
+        ws.onmessage = (event) => {
+            const p = document.createElement("p")
+            p.innerHTML = event.data
+            chat.appendChild(p)
+        }
+
+        function send(){
+            const input = document.getElementById("msg")
+            ws.send(input.value)
+            input.value = ""
+        }
+    </script>
+    
+</body>
+</html>
